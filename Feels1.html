@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Cómo te sientes hoy?</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background:
+    linear-gradient(rgba(10,20,60,0.85), rgba(10,20,60,0.95)),
+    url("https://images.unsplash.com/photo-1511379938547-c1f69419868d");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+
+.boton {
+    display: block;
+    margin: 12px auto;
+    padding: 16px;
+    width: 280px;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(45deg,#1e3cff,#00c6ff);
+    color: white;
+    box-shadow: 0 0 20px rgba(0,150,255,0.6);
+    transition: 0.3s;
+}
+
+.boton:hover {
+    transform: scale(1.08);
+}
+
+.resultado {
+    margin-top: 30px;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
+}
+
+footer{
+    margin-top:40px;
+    opacity:0.7;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>¿Cómo te sientes hoy?</h1>
+
+<button class="boton" onclick="mostrar('triste')">Triste</button>
+<button class="boton" onclick="mostrar('feliz')">Feliz</button>
+<button class="boton" onclick="mostrar('solo')">Solo</button>
+<button class="boton" onclick="mostrar('enojado')">Enojado</button>
+<button class="boton" onclick="mostrar('frustrado')">Frustrado</button>
+
+<div id="resultado" class="resultado"></div>
+
+<footer>Hecho por Jorge Zepeda</footer>
+
+<script>
+
+const datos = {
+
+triste: {
+
+frases:[
+"Esto también pasará.",
+"Tu corazón es más fuerte de lo que crees.",
+"No estás solo en esto.",
+"Sanar toma tiempo, y está bien.",
+"Sobreviviste a todo lo que creías que no podrías."
+],
+
+canciones:[
+"https://open.spotify.com/embed/track/0VjIjW4GlUZAMYd2vXMi3b",
+"https://open.spotify.com/embed/track/7qiZfU4dY1lWllzX7mPBI3",
+"https://open.spotify.com/embed/track/3AJwUDP919kvQ9QcozQPxg",
+"https://open.spotify.com/embed/track/6habFhsOp2NvshLv26DqMb",
+"https://open.spotify.com/embed/track/1mea3bSkSGXuIRvnydlB5b",
+"https://open.spotify.com/embed/track/5R8dQOPq8haW94K7mgERlO",
+"https://open.spotify.com/embed/track/2wAj5hEhOOx3z1v9J3J7WQ",
+"https://open.spotify.com/embed/track/5C4q7R6R6t0aKBslZx2drX",
+"https://open.spotify.com/embed/track/2O9F6fY5C8p4nH7QOAb4Xj",
+"https://open.spotify.com/embed/track/3lGMtkONrZdJ8kTCg6KIFf",
+"https://open.spotify.com/embed/track/48XfojJC87VKLlUOTc7zA9",
+"https://open.spotify.com/embed/track/0rWUd2pDqV8fQ3vS6zY5Jf",
+"https://open.spotify.com/embed/track/6n8J3M1QzVdHn1QvKx7YI0",
+"https://open.spotify.com/embed/track/1kG9rM7zXc8sRZy7l1N3YQ",
+"https://open.spotify.com/embed/track/3cHyrEgdyYRjgJKSOiOtcS"
+],
+
+frasesUsadas:[],
+cancionesUsadas:[]
+
+},
+
+feliz:{
+
+frases:[
+"Disfruta este momento.",
+"La felicidad vive en ti.",
+"Esto es lo que mereces.",
+"Tu energía es hermosa.",
+"Sigue brillando."
+],
+
+canciones:[
+"https://open.spotify.com/embed/track/60nZcImufyMA1MKQY3dcCH",
+"https://open.spotify.com/embed/track/5ChkMS8OtdzJeqyybCc9R5",
+"https://open.spotify.com/embed/track/2takcwOaAZWiXQijPHIx7B",
+"https://open.spotify.com/embed/track/4iV5W9uYEdYUVa79Axb7Rh",
+"https://open.spotify.com/embed/track/1Je1IMUlBXcx1Fz0WE7oPT",
+"https://open.spotify.com/embed/track/1XJdv86VumEbhPODhtzFms",
+"https://open.spotify.com/embed/track/4VqPOruhp5EdPBeR92t6lQ",
+"https://open.spotify.com/embed/track/3YRCqOhFifThpSRFJ1VWFM",
+"https://open.spotify.com/embed/track/6habFhsOp2NvshLv26DqMb",
+"https://open.spotify.com/embed/track/5cbpoIu3YjoOwbBDGUEp3P",
+"https://open.spotify.com/embed/track/4uLU6hMCjMI75M1A2tKUQC",
+"https://open.spotify.com/embed/track/0DiWol3AO6WpXZgp0goxAV"
+],
+
+frasesUsadas:[],
+cancionesUsadas:[]
+
+},
+
+solo:{
+frases:[
+"Tu compañía también es valiosa.",
+"No necesitas a nadie para ser completo.",
+"Aquí empieza tu encuentro contigo.",
+"La paz también vive en el silencio.",
+"Estás contigo, y eso basta."
+],
+canciones:[
+"https://open.spotify.com/embed/track/4VqPOruhp5EdPBeR92t6lQ",
+"https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp",
+"https://open.spotify.com/embed/track/0eGsygTp906u18L0Oimnem",
+"https://open.spotify.com/embed/track/7ouMYWpwJ422jRcDASZB7P",
+"https://open.spotify.com/embed/track/1cTZMwcBJT0Ka3UJPXOeeN",
+"https://open.spotify.com/embed/track/6QgjcU0zLnzq5OrUoSZ3OK",
+"https://open.spotify.com/embed/track/4PTG3Z6ehGkBFwjybzWkR8",
+"https://open.spotify.com/embed/track/5CQ30WqJwcep0pYcV4AMNc",
+"https://open.spotify.com/embed/track/2VxeLyX666F8uXCJ0dZF8B"
+],
+frasesUsadas:[],
+cancionesUsadas:[]
+},
+
+enojado:{
+frases:[
+"Respira.",
+"No eres tu enojo.",
+"La calma vuelve.",
+"Todo pasa.",
+"Tú tienes el control."
+],
+canciones:[
+"https://open.spotify.com/embed/track/6habFhsOp2NvshLv26DqMb",
+"https://open.spotify.com/embed/track/2takcwOaAZWiXQijPHIx7B",
+"https://open.spotify.com/embed/track/7ouMYWpwJ422jRcDASZB7P",
+"https://open.spotify.com/embed/track/2nLtzopw4rPReszdYBJU6h",
+"https://open.spotify.com/embed/track/5ghIJDpPoe3CfHMGu71E6T",
+"https://open.spotify.com/embed/track/1y7Ot9fUqkNfVnU0NwKJ5G"
+],
+frasesUsadas:[],
+cancionesUsadas:[]
+},
+
+frustrado:{
+frases:[
+"Sigue.",
+"No te rindas.",
+"Todo llega.",
+"Esto también forma parte.",
+"Eres capaz."
+],
+canciones:[
+"https://open.spotify.com/embed/track/1mea3bSkSGXuIRvnydlB5b",
+"https://open.spotify.com/embed/track/60nZcImufyMA1MKQY3dcCH",
+"https://open.spotify.com/embed/track/5ChkMS8OtdzJeqyybCc9R5",
+"https://open.spotify.com/embed/track/6habFhsOp2NvshLv26DqMb",
+"https://open.spotify.com/embed/track/4iV5W9uYEdYUVa79Axb7Rh",
+"https://open.spotify.com/embed/track/7BKLCZ1jbUBVqRi2FVlTVw",
+"https://open.spotify.com/embed/track/6nGeLlakfzlBcFdZXteDq7",
+"https://open.spotify.com/embed/track/3AhXZa8sUQht0UEdBJgpGc"
+],
+frasesUsadas:[],
+cancionesUsadas:[]
+}
+
+};
+
+
+function obtenerSinRepetir(lista, usadas){
+if(lista.length===usadas.length){ usadas.length=0; }
+let disponibles=lista.filter(x=>!usadas.includes(x));
+let elegido=disponibles[Math.floor(Math.random()*disponibles.length)];
+usadas.push(elegido);
+return elegido;
+}
+
+function mostrar(emocion){
+let data=datos[emocion];
+let frase=obtenerSinRepetir(data.frases,data.frasesUsadas);
+let cancion=obtenerSinRepetir(data.canciones,data.cancionesUsadas);
+
+document.getElementById("resultado").innerHTML=`
+<h2>${frase}</h2>
+<iframe src="${cancion}" width="300" height="152"></iframe>
+`;
+}
+
+</script>
+
+</body>
+</html>
